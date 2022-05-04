@@ -1,7 +1,10 @@
 const { v4: uuidv4 } = require('uuid');
-const Userhandler = require('../controllers/gameHandler');
-const Connection = require('../controllers/Connection');
-// const { currentGames } = require('../routes/game');
+// const UserHandler = require('../controllers/UserHandler');
+const {
+  Connection,
+  GameEventType,
+  ConnectionEventType
+} = require('../controllers/Connection');
 
 class Game {
   constructor(options) {
@@ -19,24 +22,18 @@ class Game {
     this.currentRound = 0;
 
     this.addConnectionListeners();
-    // removeConnectionListeners();
   }
 
   addConnectionListeners() {
-    console.log('instance of Connection', Connection.instance);
-    Connection.instance.addEventListener(GameEventType.JOIN, onGameJoin);
-  }
-
-  removeConnectionListeners() {
-    Connection.instance.removeEventListener(GameEventType.JOIN, onGameJoin);
+    Connection.instance.on(GameEventType.JOIN, this.onGameJoin);
   }
 
   async onGameJoin(socketID, data) {
     console.log('Game-Join: ', socketID, data);
 
-    const user = new User.Small(await UserHandler.getUserBySocketID(socketID));
+    // const user = new User.Small(await UserHandler.getUserBySocketID(socketID));
     // currentGames.find((el) => el.roomID === roomID)?.players.push(user);
-    this.players.push(user);
+    // this.players.push(user);
   }
 
   startCountdown() {
