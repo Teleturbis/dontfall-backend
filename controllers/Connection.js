@@ -2,9 +2,9 @@ const http = require('http');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
 const EventEmitter = require('events');
+
 const User = require('../classes/User');
 const UserSchema = require('../models/UserSchema');
-// const game = require('../routes/game');
 
 const PORT = process.env.PORT || 5000;
 const DATABASE_URL = `mongodb+srv://admin:${process.env.MONGO_PW}@cluster0.s1t7x.mongodb.net/test1?retryWrites=true&w=majority`;
@@ -123,8 +123,7 @@ class Connection extends EventEmitter {
   }
 
   static get instance() {
-    if (!this._instance) 
-      this._instance = new Connection();
+    if (!this._instance) this._instance = new Connection();
     return this._instance;
   }
 }

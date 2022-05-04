@@ -27,7 +27,8 @@ router.get('/categories', JWT.check, (req, res) => {
 });
 
 router.post('/host', JWT.check, async (req, res) => {
-  const options = req.body.options;
+  const options = req.body;
+  console.log(options);
   const host = await UserHandler.getFullUserById(options.hostID);
   options.players = [
     {
